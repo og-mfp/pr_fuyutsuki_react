@@ -1,0 +1,485 @@
+[
+    {
+        "slug": "shared-accordion",
+        "name": "Shared Accordion",
+        "description": "Data-driven accordion facade with single and multiple selection.",
+        "category": "Shared",
+        "page": "ui/components/SharedAccordion"
+    },
+    {
+        "slug": "shared-confirm-dialog",
+        "name": "Shared Confirm Dialog",
+        "description": "Confirmation with controlled visibility and asynchronous actions.",
+        "category": "Shared",
+        "page": "ui/components/SharedConfirmDialog"
+    },
+    {
+        "slug": "shared-form-field",
+        "name": "Shared Form Field",
+        "description": "Labeled text input with description and validation error.",
+        "category": "Shared",
+        "page": "ui/components/SharedFormField"
+    },
+    {
+        "slug": "shared-status-badge",
+        "name": "Shared Status Badge",
+        "description": "Semantic status labels with consistent variants.",
+        "category": "Shared",
+        "page": "ui/components/SharedStatusBadge"
+    },
+    {
+        "slug": "shared-page-header",
+        "name": "Shared Page Header",
+        "description": "Page title, description, and optional actions.",
+        "category": "Shared",
+        "page": "ui/components/SharedPageHeader"
+    },
+    {
+        "slug": "accordion",
+        "name": "Accordion",
+        "description": "A vertically stacked set of interactive headings that each reveal a section of content.",
+        "category": "Layout",
+        "page": "ui/components/Accordion"
+    },
+    {
+        "slug": "alert",
+        "name": "Alert",
+        "description": "Displays a callout for user attention.",
+        "category": "Feedback",
+        "page": "ui/components/Alert"
+    },
+    {
+        "slug": "alert-dialog",
+        "name": "Alert Dialog",
+        "description": "A modal dialog that interrupts the user with important content and expects a response.",
+        "category": "Overlays",
+        "page": "ui/components/AlertDialog"
+    },
+    {
+        "slug": "aspect-ratio",
+        "name": "Aspect Ratio",
+        "description": "Displays content within a desired ratio.",
+        "category": "Layout",
+        "page": "ui/components/AspectRatio"
+    },
+    {
+        "slug": "attachment",
+        "name": "Attachment",
+        "description": "Displays a file or image attachment with media, metadata, upload state, and actions.",
+        "category": "Data display",
+        "page": "ui/components/Attachment"
+    },
+    {
+        "slug": "avatar",
+        "name": "Avatar",
+        "description": "An image element with a fallback for representing the user.",
+        "category": "Data display",
+        "page": "ui/components/Avatar"
+    },
+    {
+        "slug": "badge",
+        "name": "Badge",
+        "description": "Displays a badge or a component that looks like a badge.",
+        "category": "Data display",
+        "page": "ui/components/Badge"
+    },
+    {
+        "slug": "breadcrumb",
+        "name": "Breadcrumb",
+        "description": "Displays the path to the current resource using a hierarchy of links.",
+        "category": "Navigation",
+        "page": "ui/components/Breadcrumb"
+    },
+    {
+        "slug": "bubble",
+        "name": "Bubble",
+        "description": "Displays conversational content in a message bubble. Supports variants, alignment, grouping, reactions, and collapsible content.",
+        "category": "Data display",
+        "page": "ui/components/Bubble"
+    },
+    {
+        "slug": "button",
+        "name": "Button",
+        "description": "Displays a button or a component that looks like a button.",
+        "category": "Forms",
+        "page": "ui/components/Button"
+    },
+    {
+        "slug": "button-group",
+        "name": "Button Group",
+        "description": "A container that groups related buttons together with consistent styling.",
+        "category": "Forms",
+        "page": "ui/components/ButtonGroup"
+    },
+    {
+        "slug": "calendar",
+        "name": "Calendar",
+        "description": "A calendar component that allows users to select a date or a range of dates.",
+        "category": "Forms",
+        "page": "ui/components/Calendar"
+    },
+    {
+        "slug": "card",
+        "name": "Card",
+        "description": "Displays a card with header, content, and footer.",
+        "category": "Data display",
+        "page": "ui/components/Card"
+    },
+    {
+        "slug": "carousel",
+        "name": "Carousel",
+        "description": "A carousel with motion and swipe built using Embla.",
+        "category": "Layout",
+        "page": "ui/components/Carousel"
+    },
+    {
+        "slug": "chart",
+        "name": "Chart",
+        "description": "Beautiful charts. Built using LayerChart. Copy and paste into your apps.",
+        "category": "Data display",
+        "page": "ui/components/Chart"
+    },
+    {
+        "slug": "checkbox",
+        "name": "Checkbox",
+        "description": "A control that allows the user to toggle between checked and not checked.",
+        "category": "Forms",
+        "page": "ui/components/Checkbox"
+    },
+    {
+        "slug": "collapsible",
+        "name": "Collapsible",
+        "description": "An interactive component which expands/collapses a panel.",
+        "category": "Layout",
+        "page": "ui/components/Collapsible"
+    },
+    {
+        "slug": "combobox",
+        "name": "Combobox",
+        "description": "Autocomplete input with a list of suggestions.",
+        "category": "Forms",
+        "page": "ui/components/Combobox"
+    },
+    {
+        "slug": "command",
+        "name": "Command",
+        "description": "Command menu for search and quick actions.",
+        "category": "Navigation",
+        "page": "ui/components/Command"
+    },
+    {
+        "slug": "context-menu",
+        "name": "Context Menu",
+        "description": "Displays a menu of actions triggered by a right click.",
+        "category": "Navigation",
+        "page": "ui/components/ContextMenu"
+    },
+    {
+        "slug": "data-table",
+        "name": "Data Table",
+        "description": "Powerful table and datagrids built using TanStack Table.",
+        "category": "Data display",
+        "page": "ui/components/DataTable"
+    },
+    {
+        "slug": "date-picker",
+        "name": "Date Picker",
+        "description": "A date picker component with range and presets.",
+        "category": "Forms",
+        "page": "ui/components/DatePicker"
+    },
+    {
+        "slug": "dialog",
+        "name": "Dialog",
+        "description": "A window overlaid on either the primary window or another dialog window, rendering the content underneath inert.",
+        "category": "Overlays",
+        "page": "ui/components/Dialog"
+    },
+    {
+        "slug": "drawer",
+        "name": "Drawer",
+        "description": "A drawer component for Svelte.",
+        "category": "Overlays",
+        "page": "ui/components/Drawer"
+    },
+    {
+        "slug": "dropdown-menu",
+        "name": "Dropdown Menu",
+        "description": "Displays a menu to the user  such as a set of actions or functions  triggered by a button.",
+        "category": "Navigation",
+        "page": "ui/components/DropdownMenu"
+    },
+    {
+        "slug": "empty",
+        "name": "Empty",
+        "description": "Use the Empty component to display an empty state.",
+        "category": "Feedback",
+        "page": "ui/components/Empty"
+    },
+    {
+        "slug": "field",
+        "name": "Field",
+        "description": "Combine labels, controls, and help text to compose accessible form fields and grouped inputs.",
+        "category": "Forms",
+        "page": "ui/components/Field"
+    },
+    {
+        "slug": "hover-card",
+        "name": "Hover Card",
+        "description": "For sighted users to preview content available behind a link.",
+        "category": "Overlays",
+        "page": "ui/components/HoverCard"
+    },
+    {
+        "slug": "icon-library",
+        "name": "Icon Library",
+        "description": "Browse and search a selection of app icons.",
+        "category": "Assets",
+        "page": "ui/components/IconLibrary"
+    },
+    {
+        "slug": "input",
+        "name": "Input",
+        "description": "A text input component for forms and user data entry with built-in styling and accessibility features.",
+        "category": "Forms",
+        "page": "ui/components/Input"
+    },
+    {
+        "slug": "input-group",
+        "name": "Input Group",
+        "description": "Add addons, buttons, and helper content to inputs.",
+        "category": "Forms",
+        "page": "ui/components/InputGroup"
+    },
+    {
+        "slug": "input-otp",
+        "name": "Input OTP",
+        "description": "Accessible one-time password component with copy-paste functionality.",
+        "category": "Forms",
+        "page": "ui/components/InputOTP"
+    },
+    {
+        "slug": "item",
+        "name": "Item",
+        "description": "A versatile component for displaying content with media, title, description, and actions.",
+        "category": "Data display",
+        "page": "ui/components/Item"
+    },
+    {
+        "slug": "kbd",
+        "name": "Kbd",
+        "description": "Used to display textual user input from keyboard.",
+        "category": "Data display",
+        "page": "ui/components/Kbd"
+    },
+    {
+        "slug": "label",
+        "name": "Label",
+        "description": "Renders an accessible label associated with controls.",
+        "category": "Forms",
+        "page": "ui/components/Label"
+    },
+    {
+        "slug": "marker",
+        "name": "Marker",
+        "description": "Displays an inline status, system note, bordered row, or labeled separator in a conversation.",
+        "category": "Data display",
+        "page": "ui/components/Marker"
+    },
+    {
+        "slug": "menubar",
+        "name": "Menubar",
+        "description": "A visually persistent menu common in desktop applications that provides quick access to a consistent set of commands.",
+        "category": "Navigation",
+        "page": "ui/components/Menubar"
+    },
+    {
+        "slug": "message",
+        "name": "Message",
+        "description": "Displays a message in a conversation, with optional avatar, header, footer, and alignment.",
+        "category": "Data display",
+        "page": "ui/components/Message"
+    },
+    {
+        "slug": "message-scroller",
+        "name": "Message Scroller",
+        "description": "A conversation viewport with scroll anchoring and a jump-to-latest control.",
+        "category": "Data display",
+        "page": "ui/components/MessageScroller"
+    },
+    {
+        "slug": "navigation-menu",
+        "name": "Navigation Menu",
+        "description": "A collection of links for navigating websites.",
+        "category": "Navigation",
+        "page": "ui/components/NavigationMenu"
+    },
+    {
+        "slug": "pagination",
+        "name": "Pagination",
+        "description": "Pagination with page navigation, next and previous links.",
+        "category": "Navigation",
+        "page": "ui/components/Pagination"
+    },
+    {
+        "slug": "popover",
+        "name": "Popover",
+        "description": "Displays rich content in a portal, triggered by a button.",
+        "category": "Overlays",
+        "page": "ui/components/Popover"
+    },
+    {
+        "slug": "progress",
+        "name": "Progress",
+        "description": "Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.",
+        "category": "Feedback",
+        "page": "ui/components/Progress"
+    },
+    {
+        "slug": "questionnaire",
+        "name": "Questionnaire",
+        "description": "A multi-step questionnaire with single-choice, multiple-choice, freeform, and skippable questions.",
+        "category": "Forms",
+        "page": "ui/components/Questionnaire"
+    },
+    {
+        "slug": "radio-group",
+        "name": "Radio Group",
+        "description": "A set of checkable buttonsknown as radio buttonswhere no more than one of the buttons can be checked at a time.",
+        "category": "Forms",
+        "page": "ui/components/RadioGroup"
+    },
+    {
+        "slug": "range-calendar",
+        "name": "Range Calendar",
+        "description": "A calendar component that allows users to select a range of dates.",
+        "category": "Forms",
+        "page": "ui/components/RangeCalendar"
+    },
+    {
+        "slug": "resizable",
+        "name": "Resizable",
+        "description": "Accessible resizable panel groups and layouts with keyboard support.",
+        "category": "Layout",
+        "page": "ui/components/Resizable"
+    },
+    {
+        "slug": "scroll-area",
+        "name": "Scroll Area",
+        "description": "Augments native scroll functionality for custom, cross-browser styling.",
+        "category": "Layout",
+        "page": "ui/components/ScrollArea"
+    },
+    {
+        "slug": "select",
+        "name": "Select",
+        "description": "Displays a list of options for the user to pick fromtriggered by a button.",
+        "category": "Forms",
+        "page": "ui/components/Select"
+    },
+    {
+        "slug": "separator",
+        "name": "Separator",
+        "description": "Visually or semantically separates content.",
+        "category": "Layout",
+        "page": "ui/components/Separator"
+    },
+    {
+        "slug": "sheet",
+        "name": "Sheet",
+        "description": "Extends the Dialog component to display content that complements the main content of the screen.",
+        "category": "Overlays",
+        "page": "ui/components/Sheet"
+    },
+    {
+        "slug": "sidebar",
+        "name": "Sidebar",
+        "description": "A composable, themeable and customizable sidebar component.",
+        "category": "Navigation",
+        "page": "ui/components/Sidebar"
+    },
+    {
+        "slug": "skeleton",
+        "name": "Skeleton",
+        "description": "Use to show a placeholder while content is loading.",
+        "category": "Feedback",
+        "page": "ui/components/Skeleton"
+    },
+    {
+        "slug": "slider",
+        "name": "Slider",
+        "description": "An input where the user selects a value from within a given range.",
+        "category": "Forms",
+        "page": "ui/components/Slider"
+    },
+    {
+        "slug": "sonner",
+        "name": "Sonner",
+        "description": "An opinionated toast component for Svelte.",
+        "category": "Feedback",
+        "page": "ui/components/Sonner"
+    },
+    {
+        "slug": "spinner",
+        "name": "Spinner",
+        "description": "An indicator that can be used to show a loading state.",
+        "category": "Feedback",
+        "page": "ui/components/Spinner"
+    },
+    {
+        "slug": "switch",
+        "name": "Switch",
+        "description": "A control that allows the user to toggle between checked and not checked.",
+        "category": "Forms",
+        "page": "ui/components/Switch"
+    },
+    {
+        "slug": "table",
+        "name": "Table",
+        "description": "A responsive table component.",
+        "category": "Data display",
+        "page": "ui/components/Table"
+    },
+    {
+        "slug": "tabs",
+        "name": "Tabs",
+        "description": "A set of layered sections of contentknown as tab panelsthat are displayed one at a time.",
+        "category": "Navigation",
+        "page": "ui/components/Tabs"
+    },
+    {
+        "slug": "textarea",
+        "name": "Textarea",
+        "description": "Displays a form textarea or a component that looks like a textarea.",
+        "category": "Forms",
+        "page": "ui/components/Textarea"
+    },
+    {
+        "slug": "toggle",
+        "name": "Toggle",
+        "description": "A two-state button that can be either on or off.",
+        "category": "Forms",
+        "page": "ui/components/Toggle"
+    },
+    {
+        "slug": "toggle-group",
+        "name": "Toggle Group",
+        "description": "A set of two-state buttons that can be toggled on or off.",
+        "category": "Forms",
+        "page": "ui/components/ToggleGroup"
+    },
+    {
+        "slug": "tooltip",
+        "name": "Tooltip",
+        "description": "A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.",
+        "category": "Overlays",
+        "page": "ui/components/Tooltip"
+    },
+    {
+        "slug": "typography",
+        "name": "Typography",
+        "description": "Styles for headings, paragraphs, lists, etc.",
+        "category": "Data display",
+        "page": "ui/components/Typography"
+    }
+]
