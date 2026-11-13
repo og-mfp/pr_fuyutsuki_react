@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\User;
+use App\Services\SettingsService;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\URL;
@@ -19,6 +20,8 @@ test('email verification screen can be rendered', function () {
 });
 
 test('unverified users are redirected to the email verification prompt', function () {
+    $owner = $this->installationOwner();
+    app(SettingsService::class)->update('users', ['email_confirmation_required' => true], $owner);
     $user = User::factory()->unverified()->create();
 
     $response = $this->actingAs($user)->get(route('appearance.edit'));

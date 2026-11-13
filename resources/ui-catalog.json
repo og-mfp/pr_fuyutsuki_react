@@ -1,5 +1,27 @@
 [
     {
+        "slug": "code-block",
+        "name": "Code Block",
+        "description": "Displays code with optional line numbers and copying.",
+        "category": "Data display",
+        "page": "ui/components/CodeBlock"
+    },
+    {
+        "slug": "direction",
+        "name": "Direction",
+        "description": "Provides text direction to components.",
+        "category": "Layout",
+        "page": "ui/components/Direction"
+    },
+
+    {
+        "slug": "trace",
+        "name": "Trace",
+        "description": "Displays progress and status for a sequence of steps.",
+        "category": "Data display",
+        "page": "ui/components/Trace"
+    },
+    {
         "slug": "shared-accordion",
         "name": "Shared Accordion",
         "description": "Data-driven accordion facade with single and multiple selection.",

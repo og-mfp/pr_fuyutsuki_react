@@ -5,6 +5,13 @@ import {
     SubmitForm,
     type Page,
 } from '@/components/migration/common';
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from '@/components/ui/select';
 type Window = {
     id: number;
     title: string;
@@ -25,21 +32,27 @@ function WindowFields({ item }: { item?: Window }) {
             <Field name="title" value={item?.title} required />
             <label>
                 Type
-                <select
+                <Select
                     name="type"
                     defaultValue={item?.type ?? 'infrastructure'}
-                    className="block rounded border bg-background p-2"
                 >
-                    {[
-                        'infrastructure',
-                        'deployment',
-                        'security',
-                        'database',
-                        'other',
-                    ].map((type) => (
-                        <option key={type}>{type}</option>
-                    ))}
-                </select>
+                    <SelectTrigger aria-label="Type">
+                        <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                        {[
+                            'infrastructure',
+                            'deployment',
+                            'security',
+                            'database',
+                            'other',
+                        ].map((type) => (
+                            <SelectItem key={type} value={type}>
+                                {type}
+                            </SelectItem>
+                        ))}
+                    </SelectContent>
+                </Select>
             </label>
             <Field name="reason" value={item?.reason} required />
             <Field

@@ -16,7 +16,7 @@ class UiGalleryTest extends TestCase
         return json_decode(file_get_contents(resource_path('js/lib/ui-catalog.json')), true, 512, JSON_THROW_ON_ERROR);
     }
 
-    public function test_catalog_lists_and_renders_every_independent_page(): void
+    public function test_catalog_lists_and_returns_every_component_preview(): void
     {
         $this->actingAs($this->privilegedUser());
         $catalog = $this->catalog();
@@ -26,7 +26,7 @@ class UiGalleryTest extends TestCase
 
         foreach ($catalog as $entry) {
             $this->get('/admin/ui/'.$entry['slug'])->assertOk()->assertInertia(fn (Assert $page) => $page
-                ->component($entry['page'])->where('component', $entry));
+                ->component($entry['page'], false)->where('component', $entry));
         }
 
         $this->actingAs($this->installationOwner())->get('/admin/ui')->assertOk();
@@ -55,15 +55,20 @@ class UiGalleryTest extends TestCase
         $this->get('/ui/button')->assertRedirect('/admin/ui/button');
     }
 
-    public function test_manifest_covers_installed_components_and_contains_only_real_pages(): void
+    public function test_manifest_covers_installed_components_and_uses_react_preview_aliases(): void
     {
         $catalog = $this->catalog();
         $slugs = array_column($catalog, 'slug');
         $pages = array_column($catalog, 'page');
+        $this->assertNotEmpty($catalog);
+        $this->assertSame(json_decode(file_get_contents(resource_path('ui-catalog.json')), true, 512, JSON_THROW_ON_ERROR), $catalog);
         $this->assertCount(count(array_unique($slugs)), $slugs);
         $this->assertCount(count(array_unique($pages)), $pages);
-        foreach (glob(resource_path('js/components/ui/*/index.ts')) as $barrel) {
-            $this->assertContains(basename(dirname($barrel)), $slugs);
+        foreach (glob(resource_path('js/components/ui/*.tsx')) as $component) {
+            $slug = basename($component, '.tsx');
+            if (! in_array($slug, ['icon', 'placeholder-pattern'], true)) {
+                $this->assertContains($slug, $slugs);
+            }
         }
         foreach (['combobox', 'date-picker', 'data-table', 'typography'] as $composition) {
             $this->assertContains($composition, $slugs);
@@ -71,19 +76,11 @@ class UiGalleryTest extends TestCase
         foreach ($catalog as $entry) {
             $this->assertMatchesRegularExpression('/^[a-z]+(?:-[a-z]+)*$/', $entry['slug']);
             $this->assertMatchesRegularExpression('#^ui/components/[A-Za-z]+$#', $entry['page']);
-            $path = resource_path('js/pages/'.$entry['page'].'.svelte');
-            $this->assertFileExists($path);
-            $source = file_get_contents($path);
-            $this->assertStringNotContainsString('import.meta.glob', $source);
-            $this->assertStringNotContainsString('Preview.svelte', $source);
-            $this->assertStringNotContainsString('/previews/', $source);
-            $this->assertStringContainsString('<Showcase', $source);
-            $this->assertStringContainsString('const usage', $source);
         }
-        $this->assertCount(count($pages), glob(resource_path('js/pages/ui/components/*.svelte')));
-        $this->assertFileDoesNotExist(resource_path('js/pages/ui/Component.svelte'));
-        $this->assertFileDoesNotExist(resource_path('js/pages/ui/Preview.svelte'));
-        $this->assertEmpty(glob(resource_path('js/pages/ui/previews/*.svelte')));
+        $this->assertFileExists(resource_path('js/pages/ui/ComponentPreview.tsx'));
+        $resolver = file_get_contents(resource_path('js/app.tsx'));
+        $this->assertStringContainsString("name.startsWith('ui/components/')", $resolver);
+        $this->assertStringContainsString("'ui/ComponentPreview'", $resolver);
     }
 
     public function test_settings_redirect_preserves_methods_and_destination(): void

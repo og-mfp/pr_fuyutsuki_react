@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 test('profile page is displayed', function () {
     $user = User::factory()->create();
@@ -14,13 +15,12 @@ test('profile page is displayed', function () {
 
 test('profile information can be updated', function () {
     $user = User::factory()->create();
+    $payload = ['name' => 'Test User', 'email' => 'test@example.com'];
+    $this->authorizeSecurityChange($user, 'profile.update', $payload);
 
     $response = $this
         ->actingAs($user)
-        ->patch(route('profile.update'), [
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        ->patch(route('profile.update'), $payload);
 
     $response
         ->assertSessionHasNoErrors()
@@ -35,14 +35,14 @@ test('profile information can be updated', function () {
 
 test('email is stored in lowercase so the user can still log in', function () {
     $user = User::factory()->create();
+    $payload = ['name' => 'Test User', 'email' => 'Test@Example.com'];
+    $this->authorizeSecurityChange($user, 'profile.update', $payload);
 
     $this
         ->actingAs($user)
-        ->patch(route('profile.update'), [
-            'name' => 'Test User',
-            'email' => 'Test@Example.com',
-        ])
-        ->assertSessionHasNoErrors();
+        ->patch(route('profile.update'), $payload)
+        ->assertSessionHasNoErrors()
+        ->assertRedirect(route('profile.edit'));
 
     expect($user->refresh()->email)->toBe('test@example.com');
 
@@ -60,18 +60,41 @@ test('email must be unique regardless of case', function () {
     User::factory()->create(['email' => 'taken@example.com']);
 
     $user = User::factory()->create();
+    $payload = ['name' => 'Test User', 'email' => 'Taken@Example.com'];
+    $this->authorizeSecurityChange($user, 'profile.update', $payload);
 
     $response = $this
         ->actingAs($user)
         ->from(route('profile.edit'))
-        ->patch(route('profile.update'), [
-            'name' => 'Test User',
-            'email' => 'Taken@Example.com',
-        ]);
+        ->patch(route('profile.update'), $payload);
 
     $response
         ->assertSessionHasErrors('email')
         ->assertRedirect(route('profile.edit'));
+});
+
+test('profile updates reject an email belonging to a legacy mixed case account', function () {
+    $existing = User::factory()->create();
+    DB::table('users')->where('id', $existing->id)->update(['email' => 'Legacy@Example.com']);
+    $user = User::factory()->create();
+    $payload = ['name' => 'Test User', 'email' => 'legacy@example.com'];
+    $this->authorizeSecurityChange($user, 'profile.update', $payload);
+
+    $this->patch(route('profile.update'), $payload)->assertSessionHasErrors('email');
+
+    expect($user->refresh()->email)->not->toBe('legacy@example.com');
+});
+
+test('profile updates can retain their own mixed case legacy email', function () {
+    $user = User::factory()->create();
+    DB::table('users')->where('id', $user->id)->update(['email' => 'Legacy@Example.com']);
+    $user->refresh();
+    $payload = ['name' => 'Test User', 'email' => 'legacy@example.com'];
+    $this->authorizeSecurityChange($user, 'profile.update', $payload);
+
+    $this->patch(route('profile.update'), $payload)->assertSessionHasNoErrors();
+
+    expect($user->refresh()->email)->toBe('legacy@example.com');
 });
 
 test('email verification status is unchanged when the email address is unchanged', function () {
@@ -82,6 +105,7 @@ test('email verification status is unchanged when the email address is unchanged
         ->patch(route('profile.update'), [
             'name' => 'Test User',
             'email' => $user->email,
+            'current_password' => 'password',
         ]);
 
     $response

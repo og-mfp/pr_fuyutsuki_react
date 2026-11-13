@@ -1,5 +1,12 @@
 import { useState } from 'react';
 import { Field, Screen, SubmitForm } from '@/components/migration/common';
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from '@/components/ui/select';
 type Value = string | number | boolean | null;
 const options: Record<string, string[]> = {
     default_landing_page: ['welcome', 'dashboard'],
@@ -72,34 +79,60 @@ export default function Configuration({
                         ) : typeof value === 'boolean' ? (
                             <label key={key} className="grid gap-1">
                                 {key.replaceAll('_', ' ')}
-                                <select
+                                <Select
                                     name={key}
                                     defaultValue={value ? '1' : '0'}
-                                    className="rounded border bg-background p-2"
                                 >
-                                    <option value="1">Enabled</option>
-                                    <option value="0">Disabled</option>
-                                </select>
+                                    <SelectTrigger className="w-full">
+                                        <SelectValue />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectItem value="1">
+                                            Enabled
+                                        </SelectItem>
+                                        <SelectItem value="0">
+                                            Disabled
+                                        </SelectItem>
+                                    </SelectContent>
+                                </Select>
                             </label>
                         ) : options[key] || key === 'default_role' ? (
                             <label key={key} className="grid gap-1">
                                 {key.replaceAll('_', ' ')}
-                                <select
-                                    className="rounded border bg-background p-2"
+                                <Select
                                     name={key}
-                                    defaultValue={String(value ?? '')}
+                                    defaultValue={
+                                        (key === 'default_role'
+                                            ? defaultRoleOptions.map(
+                                                  (option) => option.slug,
+                                              )
+                                            : options[key]
+                                        ).includes(String(value ?? ''))
+                                            ? String(value)
+                                            : key === 'default_role'
+                                              ? defaultRoleOptions[0]?.slug
+                                              : options[key][0]
+                                    }
                                 >
-                                    {(key === 'default_role'
-                                        ? defaultRoleOptions.map(
-                                              (option) => option.slug,
-                                          )
-                                        : options[key]
-                                    ).map((option) => (
-                                        <option key={option} value={option}>
-                                            {option}
-                                        </option>
-                                    ))}
-                                </select>
+                                    <SelectTrigger className="w-full">
+                                        <SelectValue />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        {(key === 'default_role'
+                                            ? defaultRoleOptions.map(
+                                                  (option) => option.slug,
+                                              )
+                                            : options[key]
+                                        ).map((option) => (
+                                            <SelectItem
+                                                key={option}
+                                                value={option}
+                                            >
+                                                {option}
+                                            </SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
                             </label>
                         ) : (
                             <Field
@@ -159,22 +192,26 @@ export default function Configuration({
                 >
                     <label>
                         Action
-                        <select
+                        <Select
                             name="action"
                             value={emergency}
-                            onChange={(event) =>
-                                setEmergency(event.target.value)
-                            }
-                            className="block rounded border bg-background p-2"
+                            onValueChange={setEmergency}
                         >
-                            <option value="logout">Log out accounts</option>
-                            <option value="lockdown">
-                                Lock down authentication
-                            </option>
-                            <option value="unlock">
-                                Unlock authentication
-                            </option>
-                        </select>
+                            <SelectTrigger>
+                                <SelectValue />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="logout">
+                                    Log out accounts
+                                </SelectItem>
+                                <SelectItem value="lockdown">
+                                    Lock down authentication
+                                </SelectItem>
+                                <SelectItem value="unlock">
+                                    Unlock authentication
+                                </SelectItem>
+                            </SelectContent>
+                        </Select>
                     </label>
                     {emergency === 'lockdown' && (
                         <Field name="reason" label="Lockdown reason" required />

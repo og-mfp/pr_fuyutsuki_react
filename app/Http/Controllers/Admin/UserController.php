@@ -6,6 +6,7 @@ use App\Concerns\ProfileValidationRules;
 use App\Http\Controllers\Controller;
 use App\Models\Group;
 use App\Models\Permission;
+use App\Models\Role;
 use App\Models\User;
 use App\Services\AdminAccessGuard;
 use App\Services\AuditRelationships;
@@ -40,13 +41,13 @@ class UserController extends Controller
                 'id' => $group->id,
                 'name' => $group->name,
                 'slug' => $group->slug,
-                'roles' => $group->roles->map(fn ($role) => [
+                'roles' => $group->roles->map(fn (Role $role) => [
                     'id' => $role->id,
                     'name' => $role->name,
                     'slug' => $role->slug,
-                    'permissions' => $role->permissions->map(fn ($permission) => ['id' => $permission->id, 'name' => $permission->name, 'slug' => $permission->slug]),
-                ]),
-            ]),
+                    'permissions' => $role->permissions->map(fn (Permission $permission) => ['id' => $permission->id, 'name' => $permission->name, 'slug' => $permission->slug])->all(),
+                ])->all(),
+            ])->all(),
             'permissionSlugs' => $user->permissionSlugs(),
             'trustedDeviceCount' => $user->trusted_devices_count,
         ]);

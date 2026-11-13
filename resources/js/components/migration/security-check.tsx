@@ -85,7 +85,17 @@ export function SecurityFormGuard({
         setError('');
         try {
             const payload = Object.fromEntries(
-                fields.map((field) => [field, String(data.get(field) ?? '')]),
+                fields.map((field) => {
+                    const value = data.get(field);
+                    return [
+                        field,
+                        typeof value === 'string'
+                            ? value
+                            : value === null
+                              ? ''
+                              : Object.prototype.toString.call(value),
+                    ];
+                }),
             );
             if (await authorizeSecurityChange(action, payload)) {
                 approved.current = true;

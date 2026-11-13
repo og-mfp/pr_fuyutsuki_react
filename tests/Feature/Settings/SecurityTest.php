@@ -30,7 +30,7 @@ test('security page is displayed', function () {
         );
 });
 
-test('security page requires password confirmation when enabled', function () {
+test('security page is accessible without password confirmation when enabled', function () {
     $this->skipUnlessFortifyHas(Features::twoFactorAuthentication());
 
     $user = User::factory()->create();
@@ -43,7 +43,11 @@ test('security page requires password confirmation when enabled', function () {
     $response = $this->actingAs($user)
         ->get(route('security.edit'));
 
-    $response->assertRedirect(route('password.confirm'));
+    $response->assertOk()
+        ->assertInertia(fn (Assert $page) => $page
+            ->component('settings/security')
+            ->where('canManageTwoFactor', true)
+        );
 });
 
 test('security page renders without two factor when feature is disabled', function () {
@@ -69,15 +73,17 @@ test('security page renders without two factor when feature is disabled', functi
 
 test('password can be updated', function () {
     $user = User::factory()->create();
+    $payload = [
+        'current_password' => 'password',
+        'password' => 'new-password',
+        'password_confirmation' => 'new-password',
+    ];
+    $this->authorizeSecurityChange($user, 'user-password.update', $payload);
 
     $response = $this
         ->actingAs($user)
         ->from(route('security.edit'))
-        ->put(route('user-password.update'), [
-            'current_password' => 'password',
-            'password' => 'new-password',
-            'password_confirmation' => 'new-password',
-        ]);
+        ->put(route('user-password.update'), $payload);
 
     $response
         ->assertSessionHasNoErrors()
@@ -88,17 +94,21 @@ test('password can be updated', function () {
 
 test('correct password must be provided to update password', function () {
     $user = User::factory()->create();
+    $payload = [
+        'current_password' => 'wrong-password',
+        'password' => 'new-password',
+        'password_confirmation' => 'new-password',
+    ];
+    $this->authorizeSecurityChange($user, 'user-password.update', $payload);
 
     $response = $this
         ->actingAs($user)
         ->from(route('security.edit'))
-        ->put(route('user-password.update'), [
-            'current_password' => 'wrong-password',
-            'password' => 'new-password',
-            'password_confirmation' => 'new-password',
-        ]);
+        ->put(route('user-password.update'), $payload);
 
     $response
         ->assertSessionHasErrors('current_password')
         ->assertRedirect(route('security.edit'));
+
+    expect(Hash::check('password', $user->refresh()->password))->toBeTrue();
 });

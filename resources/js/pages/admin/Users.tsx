@@ -1,4 +1,5 @@
 import { Link, usePage } from '@inertiajs/react';
+import { useState } from 'react';
 import {
     Field,
     Pagination,
@@ -7,6 +8,13 @@ import {
     type Named,
     type Page,
 } from '@/components/migration/common';
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from '@/components/ui/select';
 type Group = Named & { assignable: boolean };
 type User = {
     id: number;
@@ -31,6 +39,7 @@ export default function Users({
     const can = (permission: string) =>
         auth.user.permissions.includes(permission);
     const choices = groups.filter((group) => group.assignable);
+    const [groupId, setGroupId] = useState(filters.group_id || '');
     return (
         <Screen title="Users">
             <form
@@ -41,30 +50,44 @@ export default function Users({
                 <Field name="search" value={filters.search} />
                 <label>
                     Group
-                    <select
-                        className="block rounded border p-2"
-                        name="group_id"
-                        defaultValue={filters.group_id || ''}
+                    <input type="hidden" name="group_id" value={groupId} />
+                    <Select
+                        value={groupId || '__all__'}
+                        onValueChange={(value) =>
+                            setGroupId(value === '__all__' ? '' : value)
+                        }
                     >
-                        <option value="">All</option>
-                        {groups.map((group) => (
-                            <option key={group.id} value={group.id}>
-                                {group.name}
-                            </option>
-                        ))}
-                    </select>
+                        <SelectTrigger aria-label="Group">
+                            <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value="__all__">All</SelectItem>
+                            {groups.map((group) => (
+                                <SelectItem
+                                    key={group.id}
+                                    value={String(group.id)}
+                                >
+                                    {group.name}
+                                </SelectItem>
+                            ))}
+                        </SelectContent>
+                    </Select>
                 </label>
                 <label>
                     Status
-                    <select
-                        className="block rounded border p-2"
+                    <Select
                         name="frozen"
-                        defaultValue={filters.frozen}
+                        defaultValue={filters.frozen || 'all'}
                     >
-                        <option value="all">All</option>
-                        <option value="active">Active</option>
-                        <option value="frozen">Frozen</option>
-                    </select>
+                        <SelectTrigger aria-label="Status">
+                            <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value="all">All</SelectItem>
+                            <SelectItem value="active">Active</SelectItem>
+                            <SelectItem value="frozen">Frozen</SelectItem>
+                        </SelectContent>
+                    </Select>
                 </label>
                 <button className="rounded border p-2">Filter</button>
             </form>

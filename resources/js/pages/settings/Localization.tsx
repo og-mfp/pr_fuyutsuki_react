@@ -1,5 +1,12 @@
 import { Head } from '@inertiajs/react';
 import { SubmitForm } from '@/components/migration/common';
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from '@/components/ui/select';
 type Localization = {
     language: string;
     timezone: string;
@@ -37,22 +44,28 @@ export default function Localization({
                 label="Save localization"
             >
                 {Object.entries(options).map(([name, values]) => (
-                    <label className="grid gap-1" key={name}>
-                        {name.replaceAll('_', ' ')}
-                        <select
+                    <div className="grid gap-1" key={name}>
+                        <label htmlFor={name}>
+                            {name.replaceAll('_', ' ')}
+                        </label>
+                        <Select
                             name={name}
-                            className="rounded-md border bg-background p-2"
                             defaultValue={
                                 localization[name as keyof Localization]
                             }
                         >
-                            {values.map((value) => (
-                                <option key={value} value={value}>
-                                    {value}
-                                </option>
-                            ))}
-                        </select>
-                    </label>
+                            <SelectTrigger id={name} className="w-full">
+                                <SelectValue />
+                            </SelectTrigger>
+                            <SelectContent>
+                                {values.map((value) => (
+                                    <SelectItem key={value} value={value}>
+                                        {value}
+                                    </SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
+                    </div>
                 ))}
                 <label className="grid gap-1">
                     Currency code
@@ -65,17 +78,21 @@ export default function Localization({
                         required
                     />
                 </label>
-                <label className="grid gap-1">
-                    Currency display
-                    <select
+                <div className="grid gap-1">
+                    <label htmlFor="currency_display">Currency display</label>
+                    <Select
                         name="currency_display"
-                        className="rounded-md border bg-background p-2"
                         defaultValue={localization.currency_display}
                     >
-                        <option value="symbol">Symbol</option>
-                        <option value="code">Code</option>
-                    </select>
-                </label>
+                        <SelectTrigger id="currency_display" className="w-full">
+                            <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value="symbol">Symbol</SelectItem>
+                            <SelectItem value="code">Code</SelectItem>
+                        </SelectContent>
+                    </Select>
+                </div>
             </SubmitForm>
         </div>
     );

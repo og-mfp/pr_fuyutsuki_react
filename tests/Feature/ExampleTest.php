@@ -1,7 +1,7 @@
 <?php
 
-test('returns a successful response', function () {
+test('home redirects to setup before installation', function () {
     $response = $this->get(route('home'));
 
-    $response->assertOk();
+    $response->assertRedirect(route('setup.create'));
 });

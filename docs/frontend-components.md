@@ -19,7 +19,12 @@ React components use JSX, named exports and React props, not Svelte namespace im
 
 ```tsx
 import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import {
+    Dialog,
+    DialogContent,
+    DialogTitle,
+    DialogTrigger,
+} from '@/components/ui/dialog';
 
 export function ExampleDialog() {
     return (

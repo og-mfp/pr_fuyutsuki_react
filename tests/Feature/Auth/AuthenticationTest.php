@@ -1,10 +1,10 @@
 <?php
 
 use App\Models\User;
-use Illuminate\Support\Facades\RateLimiter;
 use Laravel\Fortify\Features;
 
 test('login screen can be rendered', function () {
+    $this->installationOwner();
     $response = $this->get(route('login'));
 
     $response->assertOk();
@@ -66,12 +66,18 @@ test('users can logout', function () {
 test('users are rate limited', function () {
     $user = User::factory()->create();
 
-    RateLimiter::increment(md5('login'.implode('|', [$user->email, '127.0.0.1'])), amount: 5);
+    for ($attempt = 0; $attempt < 5; $attempt++) {
+        $this->post(route('login.store'), [
+            'email' => $user->email,
+            'password' => 'wrong-password',
+        ])->assertSessionHasErrors('email');
+    }
 
     $response = $this->post(route('login.store'), [
         'email' => $user->email,
-        'password' => 'wrong-password',
+        'password' => 'password',
     ]);
 
     $response->assertTooManyRequests();
+    $this->assertGuest();
 });

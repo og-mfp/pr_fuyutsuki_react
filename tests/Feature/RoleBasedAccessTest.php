@@ -559,7 +559,7 @@ class RoleBasedAccessTest extends TestCase
 
         $this->actingAs($admin)->get(route('admin.groups.index'))
             ->assertOk()->assertInertia(fn ($page) => $page->component('admin/Groups')
-                ->where('groups', fn ($groups) => collect($groups)->contains(fn ($item) => $item['id'] === $group->id && array_key_exists('roles', $item))));
+            ->where('groups', fn ($groups) => collect($groups)->contains(fn ($item) => $item['id'] === $group->id && array_key_exists('roles', $item))));
         $this->get(route('admin.users.show', $user))
             ->assertOk()->assertInertia(fn ($page) => $page->component('admin/UserDetail')->where('user.id', $user->id)->missing('user.password')->missing('user.remember_token'));
     }

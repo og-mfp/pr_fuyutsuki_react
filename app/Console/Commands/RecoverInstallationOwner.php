@@ -2,17 +2,19 @@
 
 namespace App\Console\Commands;
 
+use App\Concerns\ProfileValidationRules;
 use App\Models\SecurityChallenge;
 use App\Models\User;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
-use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
 
 class RecoverInstallationOwner extends Command
 {
+    use ProfileValidationRules;
+
     protected $signature = 'owner:recover {email : Email address of the installation owner}';
 
     protected $description = 'Set a new password for the installation owner through the console';
@@ -41,7 +43,7 @@ class RecoverInstallationOwner extends Command
         $email = $owner->email;
         if ($owner->security_recovery_required === 'assisted') {
             $email = $this->ask('Verified recovery email address', $owner->email);
-            Validator::make(['email' => $email], ['email' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($owner->id)]])->validate();
+            Validator::make(['email' => $email], ['email' => $this->emailRules($owner->id)])->validate();
             if (! $this->confirm('Remove the owner’s MFA and passkeys as part of incident recovery?')) {
                 $this->error('Incident recovery requires removal of existing authentication factors.');
 

@@ -6,13 +6,30 @@ use App\Models\Group;
 use App\Models\Permission;
 use App\Models\User;
 use App\Notifications\SecurityChangeNotification;
+use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
 use Laravel\Fortify\Features;
+use RuntimeException;
 
 abstract class TestCase extends BaseTestCase
 {
+    public function createApplication(): Application
+    {
+        $app = parent::createApplication();
+        $config = $app['config'];
+
+        if ($config->get('app.env') !== 'testing'
+            || $config->get('database.default') !== 'sqlite'
+            || $config->get('database.connections.sqlite.database') !== ':memory:'
+            || filled($config->get('database.connections.sqlite.url'))) {
+            throw new RuntimeException('Refusing to run tests outside the isolated in-memory testing database.');
+        }
+
+        return $app;
+    }
+
     protected function authorizeSecurityChange(User $user, string $action, array $payload = [], ?string $target = null): void
     {
         Notification::fake();

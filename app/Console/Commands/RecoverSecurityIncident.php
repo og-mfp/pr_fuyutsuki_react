@@ -2,16 +2,18 @@
 
 namespace App\Console\Commands;
 
+use App\Concerns\ProfileValidationRules;
 use App\Models\SecurityChallenge;
 use App\Models\User;
 use App\Services\AdminAccessGuard;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
 
 class RecoverSecurityIncident extends Command
 {
+    use ProfileValidationRules;
+
     protected $signature = 'security:recover {user : ID of the affected account}';
 
     protected $description = 'Prepare a reported account for password recovery after an identity check';
@@ -30,7 +32,7 @@ class RecoverSecurityIncident extends Command
             return self::FAILURE;
         }
         $email = $this->ask('Verified recovery email address', $user->email);
-        Validator::make(['email' => $email], ['email' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($user->id)]])->validate();
+        Validator::make(['email' => $email], ['email' => $this->emailRules($user->id)])->validate();
         DB::transaction(function () use ($user, $email) {
             SecurityChallenge::where('user_id', $user->id)->update(['report_expires_at' => now()->subSecond()]);
             $user->passkeys()->delete();
